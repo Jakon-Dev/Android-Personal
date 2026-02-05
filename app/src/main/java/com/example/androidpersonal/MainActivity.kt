@@ -1,6 +1,7 @@
 package com.example.androidpersonal
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.androidpersonal.data.UserPreferences
 import com.example.androidpersonal.ui.menu.StartMenu
@@ -31,12 +33,7 @@ class MainActivity : ComponentActivity() {
                 mutableStateOf(if (prefs.isDarkMode) true else false) // Start with basic check, improve if needed to match system default handling
             }
             
-            // If explicit dark mode pref is not set, we could fallback to system, 
-            // but for now we rely on the Boolean implementation in UserPreferences which defaults to false (light).
-            // A better approach would be storing a nullable Boolean? or Enum. 
-            // Given the requirement "change option", let's strictly follow the switch. 
-            // However, on first run, we might want to respect system.
-            // Let's rely on the passed `isDarkMode` state for the theme.
+            val context = LocalContext.current
             
             var currentScreen by remember { 
                 mutableStateOf(if (userName.isBlank()) Screen.Onboarding else Screen.Start) 
@@ -63,7 +60,9 @@ class MainActivity : ComponentActivity() {
                             StartMenu(
                                 userName = userName,
                                 modifier = Modifier.padding(innerPadding),
-                                onStartClick = { /* Navigate to app functionality */ },
+                                onAppClick = { appId ->
+                                    Toast.makeText(context, "$appId feature not implemented yet", Toast.LENGTH_SHORT).show()
+                                },
                                 onSettingsClick = { currentScreen = Screen.Settings }
                             )
                         }
