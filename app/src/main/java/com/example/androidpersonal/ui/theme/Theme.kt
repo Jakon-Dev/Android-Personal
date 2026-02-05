@@ -54,6 +54,7 @@ fun AndroidPersonalTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
+            @Suppress("DEPRECATION")
             window.statusBarColor = colorScheme.background.toArgb() // Match background for seamless look
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
